@@ -2,7 +2,7 @@
   "name": "nft-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://memeswillsavenfts.io",
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
     "@testing-library/jest-dom": "^5.16.2",
