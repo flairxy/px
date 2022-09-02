@@ -96,7 +96,7 @@ function App() {
 
     registerAnimations();
     fm();
-  }, [fetchMinted]);
+  }, []);
   window.setTimeout(() => {
     const home = document.getElementsByClassName('home');
     home[0].style.transform = 'none';
