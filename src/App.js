@@ -32,7 +32,7 @@ function App() {
   ];
 
   const contract = new ethers.Contract(
-    '0x8304ad372F600E7308a9EE153ae417958C504ceA',
+    '0x336f711A0d335aAF1765BD7eCBea198e1e9AF596',
     abi,
     provider
   );
