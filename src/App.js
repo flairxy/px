@@ -13,7 +13,8 @@ import scrollreveal from 'scrollreveal';
 import './sass/index.scss';
 import { ethers } from 'ethers';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { connect } from './helpers.js';
 
 function App() {
   const [theme, setTheme] = useState('dark');
@@ -42,13 +43,22 @@ function App() {
     setTotalMinted(minted.toNumber());
   };
 
+  const connectWallet = async () => {
+    const address = await connect();
+    if (address) {
+      localStorage.setItem('address', address);
+    }
+  };
+
   const mint = async () => {
     try {
+      const address = localStorage.getItem('address');
+      if (address.length < 10) connectWallet();
       setIsProcesing(true);
       const cost = await signedContract.cost();
       await signedContract.mint(1, { value: cost });
       setIsProcesing(false);
-      toast.success("You successfully mimed it!");
+      toast.success('You successfully mimed it!');
       // window.location.reload();
     } catch (error) {
       setIsProcesing(false);
@@ -98,7 +108,7 @@ function App() {
       <ScrollToTop />
       <Navbar changeTheme={changeTheme} currentTheme={theme} />
       <ToastContainer />
-      <Home isProcesing={isProcesing} mint={mint} totalMinted={totalMinted}/>
+      <Home isProcesing={isProcesing} mint={mint} totalMinted={totalMinted} />
 
       <Clients />
       <SuperRare />
