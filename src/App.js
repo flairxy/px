@@ -53,7 +53,7 @@ function App() {
   const mint = async () => {
     try {
       const address = localStorage.getItem('address');
-      if (address !== null && address.length < 10) connectWallet();
+      if (address === null || address.length < 10) connectWallet();
       setIsProcesing(true);
       const cost = await signedContract.cost();
       await signedContract.mint(1, { value: cost });
