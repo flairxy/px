@@ -23,6 +23,7 @@ export default function Navbar({ changeTheme, currentTheme }) {
     localStorage.removeItem('address');
     setIsConnected(false);
     setAddress("");
+    window.location.reload();
   };
 
   useEffect(() => {

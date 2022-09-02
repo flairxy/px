@@ -53,7 +53,6 @@ function App() {
     } catch (error) {
       setIsProcesing(false);
       toast.error(error.message);
-      console.log(error);
     }
   };
   useEffect(() => {
