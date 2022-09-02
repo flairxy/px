@@ -5,12 +5,18 @@ import { ImSun } from 'react-icons/im';
 import { BsFillMoonFill } from 'react-icons/bs';
 import logo from '../assets/4907r.png';
 import { truncateAddress, connect } from '../helpers.js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Navbar({ changeTheme, currentTheme }) {
   const [navState, setNavState] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState('');
 
   const reconnect = async () => {
+    if (window.ethereum === undefined) {
+      toast.error('Metamask not detected');
+      return;
+    }
     const address = await connect();
     if (address) {
       setIsConnected(true);
@@ -22,7 +28,7 @@ export default function Navbar({ changeTheme, currentTheme }) {
   const disconnect = () => {
     localStorage.removeItem('address');
     setIsConnected(false);
-    setAddress("");
+    setAddress('');
     window.location.reload();
   };
 

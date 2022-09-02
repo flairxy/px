@@ -23,20 +23,28 @@ function App() {
   const changeTheme = () => {
     theme === 'dark' ? setTheme('light') : setTheme('dark');
   };
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  let abi = [
-    'function mint(uint256 tokens) public payable',
-    'function cost() view returns (uint)',
-    'function totalSupply() view returns (uint)',
-  ];
 
-  const contract = new ethers.Contract(
-    '0x336f711A0d335aAF1765BD7eCBea198e1e9AF596',
-    abi,
-    provider
-  );
-  const signedContract = contract.connect(signer);
+  let provider = null;
+  let signer = null;
+  let contract = null;
+  let signedContract = null;
+  if (window.ethereum !== undefined) {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+
+    let abi = [
+      'function mint(uint256 tokens) public payable',
+      'function cost() view returns (uint)',
+      'function totalSupply() view returns (uint)',
+    ];
+
+    contract = new ethers.Contract(
+      '0x336f711A0d335aAF1765BD7eCBea198e1e9AF596',
+      abi,
+      provider
+    );
+    signedContract = contract.connect(signer);
+  }
 
   const fetchMinted = async () => {
     const minted = await signedContract.totalSupply();
@@ -44,14 +52,23 @@ function App() {
   };
 
   const connectWallet = async () => {
+    if (window.ethereum === undefined) {
+      toast.error('Metamask not detected');
+      return;
+    }
     const address = await connect();
     if (address) {
+      await fetchMinted();
       localStorage.setItem('address', address);
     }
   };
 
   const mint = async () => {
     try {
+      if (window.ethereum === undefined) {
+        toast.error('Metamask not detected');
+        return;
+      }
       const address = localStorage.getItem('address');
       if (address === null || address.length < 10) await connectWallet();
       setIsProcesing(true);
@@ -90,12 +107,14 @@ function App() {
         }
       );
     };
-    const fm = async () => {
-      await fetchMinted();
-    };
-
     registerAnimations();
-    fm();
+    if (window.ethereum !== undefined) {
+      const fm = async () => {
+        await fetchMinted();
+      };
+
+      fm();
+    }
   }, []);
   window.setTimeout(() => {
     const home = document.getElementsByClassName('home');
