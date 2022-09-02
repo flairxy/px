@@ -1,0 +1,10 @@
+@media only screen and (max-width: 1079px) {
+    .image1{
+        display: flex;
+        flex-direction: column;
+        margin-top: 500px;
+    }
+    .image65{
+        display: none;
+    }
+  }
