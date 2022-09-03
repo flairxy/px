@@ -79,7 +79,7 @@ function App() {
       if (address === null || address.length < 10) await connectWallet();
       setIsProcesing(true);
       // const cost = await signedContract.cost();
-      await signedContract.mint(1, { value: '9641000000000000' });
+      await signedContract.mint(1);
       // await signedContract.freemint(1);
       setIsProcesing(false);
       toast.success('You successfully mimed it!');
