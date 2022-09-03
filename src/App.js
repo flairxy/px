@@ -82,7 +82,7 @@ function App() {
       // window.location.reload();
     } catch (error) {
       setIsProcesing(false);
-      toast.error(error.message);
+      toast.error("Mint failed! Please try again");
     }
   };
   useEffect(() => {
