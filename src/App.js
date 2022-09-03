@@ -34,12 +34,14 @@ function App() {
 
     let abi = [
       'function mint(uint256 tokens) public payable',
+      'function freemint(uint256 tokens) public',
       'function cost() view returns (uint)',
       'function totalSupply() view returns (uint)',
+      'function ownerOf(uint256 id) view returns (address)',
     ];
 
     contract = new ethers.Contract(
-      '0x336f711A0d335aAF1765BD7eCBea198e1e9AF596',
+      '0x43df272d30bEF32b3517Bd1c7f51E87e03877030',
       abi,
       provider
     );
@@ -48,6 +50,11 @@ function App() {
 
   const fetchMinted = async () => {
     const minted = await signedContract.totalSupply();
+    let addresses = [];
+    for(let i = 1; i <= minted.toNumber(); i++){
+      const address = await signedContract.ownerOf(i);
+      addresses.push(address);
+    }
     setTotalMinted(minted.toNumber());
   };
 
@@ -72,8 +79,9 @@ function App() {
       const address = localStorage.getItem('address');
       if (address === null || address.length < 10) await connectWallet();
       setIsProcesing(true);
-      const cost = await signedContract.cost();
-      await signedContract.mint(1, { value: cost });
+      // const cost = await signedContract.cost();
+      // await signedContract.mint(1, { value: cost });
+      await signedContract.mifreemintnt(1);
       setIsProcesing(false);
       toast.success('You successfully mimed it!');
       // window.location.reload();
