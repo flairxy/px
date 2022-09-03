@@ -79,9 +79,9 @@ function App() {
       const address = localStorage.getItem('address');
       if (address === null || address.length < 10) await connectWallet();
       setIsProcesing(true);
-      // const cost = await signedContract.cost();
-      // await signedContract.mint(1, { value: cost });
-      await signedContract.freemint(1);
+      const cost = await signedContract.cost();
+      await signedContract.mint(1, { value: cost });
+      // await signedContract.freemint(1);
       setIsProcesing(false);
       toast.success('You successfully mimed it!');
       // window.location.reload();
