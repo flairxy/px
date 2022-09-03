@@ -81,7 +81,7 @@ function App() {
       setIsProcesing(true);
       // const cost = await signedContract.cost();
       // await signedContract.mint(1, { value: cost });
-      await signedContract.mifreemintnt(1);
+      await signedContract.freemint(1);
       setIsProcesing(false);
       toast.success('You successfully mimed it!');
       // window.location.reload();
