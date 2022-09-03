@@ -49,12 +49,7 @@ function App() {
   }
 
   const fetchMinted = async () => {
-    const minted = await signedContract.totalSupply();
-    let addresses = [];
-    for(let i = 1; i <= minted.toNumber(); i++){
-      const address = await signedContract.ownerOf(i);
-      addresses.push(address);
-    }
+    const minted = await signedContract.totalSupply(); 
     setTotalMinted(minted.toNumber());
   };
 
