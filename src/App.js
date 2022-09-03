@@ -49,8 +49,12 @@ function App() {
   }
 
   const fetchMinted = async () => {
-    const minted = await signedContract.totalSupply(); 
-    setTotalMinted(minted.toNumber());
+    try {
+      const minted = await signedContract.totalSupply();
+      setTotalMinted(minted.toNumber());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const connectWallet = async () => {
@@ -75,14 +79,14 @@ function App() {
       if (address === null || address.length < 10) await connectWallet();
       setIsProcesing(true);
       // const cost = await signedContract.cost();
-      await signedContract.mint(1);
+      await signedContract.mint(1, { value: '9641000000000000' });
       // await signedContract.freemint(1);
       setIsProcesing(false);
       toast.success('You successfully mimed it!');
       // window.location.reload();
     } catch (error) {
       setIsProcesing(false);
-      toast.error("Mint failed! Please try again");
+      toast.error('Mint failed! Please try again');
     }
   };
   useEffect(() => {
